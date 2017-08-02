@@ -50,7 +50,7 @@ def handle_session_end_request():
     """ This Function handles the Session End Request """
     session_attributes = {}
     card_title = "Session Ended"
-    speech_output = "<speak> Thanks for visiting, <say-as interpret-as="interjection">cheerio</say-as> </speak>"
+    speech_output = "<speak> Thanks for visiting, <say-as interpret-as=\"interjection\">cheerio</say-as> </speak>"
     card_output = " Thanks for visiting, cheerio!"
     should_end_session = True
     return build_response(session_attributes, build_speechlet_response(card_title, speech_output, card_output, None, should_end_session))
@@ -59,7 +59,7 @@ def help_response():
     """ This Function is for handling `HelpIntent` response """
     session_attributes = {}
     card_title = "Help Intent"
-    speech_output = "<speak> To know about Harish say \'Who is Harish?\', to know about his skills say \'Tell me about his skill set\', to know more about his projects say \'Tell me about his projects?\' If you want to know more details you can contact him on <say-as interpret-as="spell-out">hsista123@gmail.com</say-as> </speak>"
+    speech_output = "<speak> To know about Harish say \'Who is Harish?\', to know about his skills say \'Tell me about his skill set\', to know more about his projects say \'Tell me about his projects?\' If you want to know more details you can contact him on <say-as interpret-as=\"spell-out\">hsista123@gmail.com</say-as> </speak>"
     card_output = " To know about Harish say \'Who is Harish?\', to know about his skills say \'Tell me about his skill set\', to know more about his projects say \'Tell me about his projects?\'  If you want to know more details you can contact him on \'hsista123@gmail.com\'"
     reprompt_text = "To repeat all the options say \'Help\' again"
     should_end_session = True
@@ -67,7 +67,7 @@ def help_response():
 
 def get_intro_response(intent, session):
     """ This Function is for handling `IntroIntent` response """
-	session_attributes = {}
+    session_attributes = {}
     card_title = "Harish Introduction"
     speech_output = "<speak> He is an accomplished technical professional with proven experience, in developing and deploying cutting-edge skills for me, and other AI platforms, I really like him. To know more ask another question or say \'Help\'.</speak>"
     card_output = "He is an accomplished technical professional with proven experience, in developing and deploying cutting-edge skills for me, and other AI platforms, I really like him. To know more ask another question or say \'Help\'."
@@ -81,7 +81,6 @@ def get_skill_set_response(intent, session):
     card_title = "Skill Sets"
     speech_output = "<speak> He is comfortable with many Programming Languages. Some of his best are Python, Java-Script, Swift and Objective-C </speak>"
     card_output = " He is comfortable with many Programming Languages. Some of his best are Python, Java-Script, Swift and Objective-C "
-    card_output = 
     reprompt_text = "To know more options say \'Help\' or ask another question."
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response( card_title, speech_output, card_output, reprompt_text, should_end_session))
