@@ -4,17 +4,17 @@ This is the code of ``Harish Resume`` Skill for Amazon Alexa.
 """
 from __future__ import print_function
 
-def build_speechlet_response(title, output, reprompt_text, should_end_session):
+def build_speechlet_response(title, speech_output, card_output, reprompt_text, should_end_session):
 """ This Functions helps build Speechlet Responce Structure """
     return {
         'outputSpeech': {
-            'type': 'PlainText',
-            'text': output
+            'type': 'SSML',
+            'text': speech_output
         },
         'card': {
             'type': 'Simple',
             'title': title,
-            'content': output
+            'content': card_output
         },
         'reprompt': {
             'outputSpeech':{
@@ -34,22 +34,68 @@ def build_response(session_attributes, speechlet_response):
         'response': speechlet_response
     }
 
+#--------------------------------- Response Functions -----------------------------------
+
 def get_welcome_response():
 """ This Function is invoked when the Welcome intent is called """
     session_attributes = {}
     card_title = "Welcome Responce"
-    speech_output = "Welcome Response"
-    reprompt_text = "Reprompt Text"
+    speech_output = "<speak> <audio src='https://s3.amazonaws.com/harish.bot.alexa/Intro_Music.mp3' /> Hi There! I can tell you all about you want to know about Haris Sista. Say \'Help\' to listen to more options. </speak>"
+    card_output = " Hi There! I can tell you all about you want to know about Haris Sista. Say \'Help\' to listen to more options. "
+    reprompt_text = "Say \'Help\' to listen to more options."
     should_end_session = False
-    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
+    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, card_output, reprompt_text, should_end_session))
 
 def handle_session_end_request():
 """ This Function handles the Session End Request """
     session_attributes = {}
     card_title = "Session Ended"
-    speech_output = "Session End Text"
+    speech_output = "<speak> Thanks for visiting, <say-as interpret-as="interjection">cheerio</say-as> </speak>"
+    card_output = " Thanks for visiting, cheerio!"
     should_end_session = True
-    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, None, should_end_session))
+    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, card_output, None, should_end_session))
+
+def help_response():
+""" This Function is for handling `HelpIntent` response """
+    session_attributes = {}
+    card_title = "Help Intent"
+    speech_output = "<speak> To know about Harish say \'Who is Harish?\', to know about his skills say \'Tell me about his skill set\', to know more about his projects say \'Tell me about his projects?\' and to know how far he lives, say \'How far does he live from my place?\' If you want to know more details you can contact him on <say-as interpret-as="spell-out">hsista123@gmail.com</say-as> </speak>"
+    card_output = " To know about Harish say \'Who is Harish?\', to know about his skills say \'Tell me about his skill set\', to know more about his projects say \'Tell me about his projects?\' and to know how far he lives, say \'How far does he live from my place?\' If you want to know more details you can contact him on \'hsista123@gmail.com\'"
+    reprompt_text = "To repeat all the options say \'Help\' again"
+    should_end_session = True
+    return build_response(session_attributes, build_speechlet_response( card_title, speech_output, card_output, reprompt_text, should_end_session))
+
+def get_intro_response(intent, session):
+""" This Function is for handling `IntroIntent` response """
+	session_attributes = {}
+    card_title = "Harish Introduction"
+    speech_output = "<speak> He is an accomplished technical professional with proven experience, in developing and deploying cutting-edge skills for me, and other AI platforms, I really like him. To know more ask another question or say \'Help\'.</speak>"
+    card_output = "He is an accomplished technical professional with proven experience, in developing and deploying cutting-edge skills for me, and other AI platforms, I really like him. To know more ask another question or say \'Help\'."
+    reprompt_text = "To know more options say \'Help\' or ask another question."
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response( card_title, speech_output, card_output ,reprompt_text, should_end_session))
+
+def get_skill_set_response(intent, session):
+""" This Function is for handling `SkillsIntent` response """
+    session_attributes = {}
+    card_title = "Skill Sets"
+    speech_output = "<speak> He is comfortable with many Programming Languages. Some of his best are Python, Java-Script, Swift and Objective-C </speak>"
+    card_output = " He is comfortable with many Programming Languages. Some of his best are Python, Java-Script, Swift and Objective-C "
+    card_output = 
+    reprompt_text = "To know more options say \'Help\' or ask another question."
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response( card_title, speech_output, card_output, reprompt_text, should_end_session))
+
+def get_work_response(intent, session):
+""" This Function is for handling `ProjectsIntent` response """
+    session_attributes = {}
+    card_title = "Projects"
+    speech_output = "<speak> Harish keeps upto date knowledge on all the AI-Platforms. Till now he made up 30 Alexa which comprise of News feed skills, Tivia skills and other event based skills. He als worked on lot of IOS APllications and I-Message Applications. </speak>"
+    card_output = "Harish keeps upto date knowledge on all the AI-Platforms. Till now he made up 30 Alexa which comprise of News feed skills, Tivia skills and other event based skills. He als worked on lot of IOS APllications and I-Message Applications."
+    reprompt_text = "To know more options say \'Help\' or ask another question."
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response( card_title, speech_output, card_output, reprompt_text, should_end_session))
+
 
 
 #----------------------------------- Events -----------------------------------------
@@ -70,7 +116,13 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     if intent_name == "AMAZON.HelpIntent":
-        return get_welcome_response()
+        return help_response()
+    elif intent_name == "IntroIntent":
+        return get_intro_response(intent, session)
+    elif intent_name == "SkillsIntent":
+        return get_skill_set_response(intent, session)
+    elif intent_name == "ProjectsIntent":
+        return get_work_response(intent, session)
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
         return handle_session_end_request()
     else:
