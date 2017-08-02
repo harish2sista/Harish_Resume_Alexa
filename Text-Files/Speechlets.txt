@@ -1,0 +1,14 @@
+IntroIntent Who is Harish
+IntroIntent Tell me about Harish
+IntroIntent Tell me about Harish Sista
+IntroIntent Who is Harish Sista
+
+SkillsIntent Tell me about his skill set
+SkillsIntent Tell me about Harish's Skills
+SkillsIntent Tell me about his skills
+SkillsIntent Tell me about Harish's Skills
+SkillsIntent Tell me about Harish's skill set
+
+ProjectsIntent Tell me about his projects
+ProjectsIntent Tell me about his projects list
+ 

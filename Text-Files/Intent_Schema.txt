@@ -1,0 +1,22 @@
+{
+  "intents":[
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "IntroIntent"
+    },
+    {
+      "intent": "SkillsIntent"
+    },
+    {
+      "intent": "ProjectsIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    }
+  ]
+}
