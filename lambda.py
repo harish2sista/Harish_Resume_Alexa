@@ -9,7 +9,7 @@ def build_speechlet_response(title, speech_output, card_output, reprompt_text, s
     return {
         'outputSpeech': {
             'type': 'SSML',
-            'text': speech_output
+            'ssml': speech_output
         },
         'card': {
             'type': 'Simple',
